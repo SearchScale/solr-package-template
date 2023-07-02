@@ -1,0 +1,58 @@
+{
+    "version-constraint": "8 - 9",
+    "plugins": [
+
+      {% if cookiecutter['RequestHandler'] == 'True' %}
+        
+      {
+        "name": "request-handler",
+        "setup-command": {
+          "path": "/api/collections/${collection}/config",
+          "payload": {"add-requesthandler": {"name": "${RH-HANDLER-PATH}", "class": "{{cookiecutter.project_name}}:$$REQUESTHANDLER_CLASS_NAME"}},
+          "method": "POST"
+        },
+        "uninstall-command": {
+          "path": "/api/collections/${collection}/config",
+          "payload": {"delete-requesthandler": "${RH-HANDLER-PATH}"},
+          "method": "POST"
+        },
+        "verify-command": {
+          "path": "/api/collections/${collection}/config/requestHandler?componentName=${RH-HANDLER-PATH}&meta=true",
+          "method": "GET",
+          "condition": "$['config'].['requestHandler'].['${RH-HANDLER-PATH}'].['_packageinfo_'].['version']",
+          "expected": "${package-version}"
+        }
+      }
+        
+      {% endif %}
+
+      {% if cookiecutter['QueryParser'] == 'True' %}
+        
+      {
+        "name": "query-parser",
+        "setup-command": {
+          "path": "/api/collections/${collection}/config",
+          "payload": {"add-requesthandler": {"name": "${QP-PATH}", "class": "{{cookiecutter.project_name}}:$$QUERYPARSER_CLASS_NAME"}},
+          "method": "POST"
+        },
+        "uninstall-command": {
+          "path": "/api/collections/${collection}/config",
+          "payload": {"delete-requesthandler": "${QP-PATH}"},
+          "method": "POST"
+        },
+        "verify-command": {
+          "path": "/api/collections/${collection}/config/requestHandler?componentName=${QP-PATH}&meta=true",
+          "method": "GET",
+          "condition": "$['config'].['requestHandler'].['${QP-PATH}'].['_packageinfo_'].['version']",
+          "expected": "${package-version}"
+        }
+      }
+        
+      {% endif %}
+
+    ],
+
+    "parameter-defaults": {
+      {% if cookiecutter['RequestHandler'] == 'True' %} "RH-HANDLER-PATH": "$$REQUESTHANDLER_PATH" {% endif %}
+    }
+}

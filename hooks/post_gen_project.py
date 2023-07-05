@@ -10,6 +10,18 @@ def substitute(filename, vars):
     with open(filename, "w") as file:
         file.write(contents)
 
+def handleCommas(filename):
+    with open(filename) as file:
+        contents = file.read()
+        for key in vars:
+            for i in range(10):
+              sentinel="$$COMMA"+str(i)
+              contents = contents.replace(sentinel, ",", contents.count(sentinel)-1)
+              contents = contents.replace(sentinel, "")
+    with open(filename, "w") as file:
+        file.write(contents)
+
+
 class_names = {"RequestHandler.java": "REQUESTHANDLER_CLASS_NAME",
                "QueryParser.java": "QUERYPARSER_CLASS_NAME",
                "PostFilter.java": "POSTFILTER_CLASS_NAME"}
@@ -17,6 +29,10 @@ vars = json.load(open("vars.json"))
 
 # Substitute all classnames and other inputs inside the file
 substitute("src/main/resources/manifest.json", vars)
+
+# Handle commas in manifest.json
+handleCommas("src/main/resources/manifest.json")
+
 for file in class_names:
     substitute("src/main/java/" + file, vars)
 

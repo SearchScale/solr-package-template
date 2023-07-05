@@ -1,9 +1,7 @@
 {
     "version-constraint": "8 - 9",
     "plugins": [
-
       {% if cookiecutter['RequestHandler'] == 'True' %}
-        
       {
         "name": "request-handler",
         "setup-command": {
@@ -22,13 +20,8 @@
           "condition": "$['config'].['requestHandler'].['${RH-HANDLER-PATH}'].['_packageinfo_'].['version']",
           "expected": "${package-version}"
         }
-      }
-        
-      {% endif %}
-
-      {% if cookiecutter['QueryParser'] == 'True' %}
-        
-      {
+      }$$COMMA0 {% endif %}
+      {% if cookiecutter['QueryParser'] == 'True' %}{
         "name": "query-parser",
         "setup-command": {
           "path": "/api/collections/${collection}/config",
@@ -46,13 +39,11 @@
           "condition": "$['config'].['requestHandler'].['${QP-PATH}'].['_packageinfo_'].['version']",
           "expected": "${package-version}"
         }
-      }
-        
-      {% endif %}
-
+      }$$COMMA0 {% endif %}
     ],
 
     "parameter-defaults": {
-      {% if cookiecutter['RequestHandler'] == 'True' %} "RH-HANDLER-PATH": "$$REQUESTHANDLER_PATH" {% endif %}
+      {% if cookiecutter['RequestHandler'] == 'True' %} "RH-HANDLER-PATH": "$$REQUESTHANDLER_PATH" {% endif %}$$COMMA1
+      {% if cookiecutter['QueryParser'] == 'True' %} "QP-PATH": "$$REQUESTHANDLER_PATH" {% endif %}$$COMMA1
     }
 }

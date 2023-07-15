@@ -1,4 +1,4 @@
-package com.chattopadhyaya;
+package {{cookiecutter.package_prefix}};
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -33,9 +33,9 @@ import org.apache.solr.request.SolrQueryRequest;
 import org.apache.solr.request.SolrRequestInfo;
 import org.apache.solr.response.SolrQueryResponse;
 
-public class $REQUESTHANDLER_CLASS_NAME extends SearchHandler {
+public class $$REQUESTHANDLER_CLASS_NAME extends SearchHandler {
 
-  List<QAPattern> patterns = new ArrayList<$REQUESTHANDLER_CLASS_NAME.QAPattern>();
+  List<QAPattern> patterns = new ArrayList<$$REQUESTHANDLER_CLASS_NAME.QAPattern>();
 
   @Override
   public void init(NamedList args) {

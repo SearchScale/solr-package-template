@@ -1,12 +1,12 @@
 {
-    "version-constraint": "8 - 9",
+    "version-constraint": "{{cookiecutter.version_constraint}}",
     "plugins": [
       {% if cookiecutter['RequestHandler'] == 'True' %}
       {
         "name": "request-handler",
         "setup-command": {
           "path": "/api/collections/${collection}/config",
-          "payload": {"add-requesthandler": {"name": "${RH-HANDLER-PATH}", "class": "{{cookiecutter.project_name}}:$$REQUESTHANDLER_CLASS_NAME"}},
+          "payload": {"add-requesthandler": {"name": "${RH-HANDLER-PATH}", "class": "{{cookiecutter.project_name}}:{{cookiecutter.package_prefix}}.$$REQUESTHANDLER_CLASS_NAME"}},
           "method": "POST"
         },
         "uninstall-command": {
@@ -21,29 +21,30 @@
           "expected": "${package-version}"
         }
       }$$COMMA0 {% endif %}
-      {% if cookiecutter['QueryParser'] == 'True' %}{
-        "name": "query-parser",
+      {% if cookiecutter['UpdateRequestProcessor'] == 'True' %}{
+        "name": "update-processor",
         "setup-command": {
           "path": "/api/collections/${collection}/config",
-          "payload": {"add-requesthandler": {"name": "${QP-PATH}", "class": "{{cookiecutter.project_name}}:$$QUERYPARSER_CLASS_NAME"}},
+          "payload": {"add-updateprocessor": {"name": "${URP-NAME}", "class": "{{cookiecutter.project_name}}:{{cookiecutter.package_prefix}}.$$URP_CLASS_NAMEFactory"}},
           "method": "POST"
         },
         "uninstall-command": {
           "path": "/api/collections/${collection}/config",
-          "payload": {"delete-requesthandler": "${QP-PATH}"},
+          "payload": {"delete-updateprocessor": "${URP-NAME}"},
           "method": "POST"
         },
         "verify-command": {
-          "path": "/api/collections/${collection}/config/requestHandler?componentName=${QP-PATH}&meta=true",
+          "path": "/api/collections/${collection}/config/updateProcessor?componentName=${URP-NAME}&meta=true",
           "method": "GET",
-          "condition": "$['config'].['requestHandler'].['${QP-PATH}'].['_packageinfo_'].['version']",
+          "condition": "$['config'].['updateProcessor'].['${URP-NAME}'].['_packageinfo_'].['version']",
           "expected": "${package-version}"
         }
       }$$COMMA0 {% endif %}
+ 
     ],
 
     "parameter-defaults": {
-      {% if cookiecutter['RequestHandler'] == 'True' %} "RH-HANDLER-PATH": "$$REQUESTHANDLER_PATH" {% endif %}$$COMMA1
-      {% if cookiecutter['QueryParser'] == 'True' %} "QP-PATH": "$$REQUESTHANDLER_PATH" {% endif %}$$COMMA1
+      {% if cookiecutter['RequestHandler'] == 'True' %} "RH-HANDLER-PATH": "$$REQUESTHANDLER_PATH" $$COMMA1{% endif %}
+      {% if cookiecutter['UpdateRequestProcessor'] == 'True' %} "URP-NAME": "$$URP_NAME" $$COMMA1{% endif %}
     }
 }

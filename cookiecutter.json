@@ -1,7 +1,9 @@
 {
-    "project_name": "sample-solr-package",
-    "license": ["Apache Software License 2.0", "MIT", "BSD-3", "GNU GPL v3.0"],
-    "RequestHandler": [true, false],
-    "QueryParser": [true, false],
-    "PostFilter": [false, true]
+  "package_prefix": "com.mydomain.mysubdomain",
+  "project_name": "sample-solr-package",
+  "solr_version": "9.2.1",
+  "version_constraint": "9.0 - 9.99",
+  "license": ["Apache Software License 2.0", "None"],
+  "RequestHandler": [true, false],
+  "UpdateRequestProcessor": [true, false]
 }

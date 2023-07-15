@@ -32,7 +32,7 @@ A simple Solr package for a question answering engine
 * Add the repository:
 
     # If hosted off Github:
-    `bin/solr package add-repo {{cookiecutter.project_name}}-repo "https://raw.githubusercontent.com/myusername/{{cookiecutter.project_name}}/master/repo/"`
+    `bin/solr package add-repo {{cookiecutter.project_name}}-repo "https://raw.githubusercontent.com/myusername/{{cookiecutter.project_name}}/main/repo/"`
 
     # If hosted locally:
     `bin/solr package add-repo {{cookiecutter.project_name}}-repo "http://localhost:8000/repo/"`

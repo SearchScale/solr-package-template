@@ -10,6 +10,8 @@ To generate a new project,
 
     # Answer all the questions
 
+    # Then cd into the new project, and read README.md for generating keypair and building instructions.
+
 
 ## Features
 

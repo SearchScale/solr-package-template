@@ -6,6 +6,9 @@ import datetime
 
 artifact_name = sys.argv[1]
 version = sys.argv[2]
+
+os.popen("cp target/" + artifact_name + "-" + version + ".jar repo/.")
+
 if os.getenv("SOLR_PACKAGE_SIGNING_PRIVATE_KEY_PATH") == None:
     raise Exception("Please add an environment variable SOLR_PACKAGE_SIGNING_PRIVATE_KEY_PATH to point to your private key (.pem) file used for signing the package artifacts.")
     sys.exit(1)
@@ -44,7 +47,12 @@ release["version"] = version
 release["date"] = str(datetime.date.today())
 release["artifacts"] = [{"url": artifact_name + "-" + version + ".jar", "sig": signature}]
 
-repository[0]["versions"].append(release)
+retainedReleases = []
+for i in range(len(repository[0]["versions"])):
+    if (repository[0]["versions"][i]["version"] != version):
+        retainedReleases.append(repository[0]["versions"][i])
+retainedReleases.append(release)
+repository[0]["versions"] = retainedReleases
 
 json.dump(repository, open('repo/repository.json', 'w'), indent=2)
 

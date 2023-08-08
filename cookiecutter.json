@@ -4,6 +4,6 @@
   "solr_version": "9.2.1",
   "version_constraint": "9.0 - 9.99",
   "license": ["Apache Software License 2.0", "None"],
-  "RequestHandler": [true, false],
-  "UpdateRequestProcessor": [true, false]
+  "RequestHandler": ["True", "False"],
+  "UpdateRequestProcessor": ["True", "False"]
 }
